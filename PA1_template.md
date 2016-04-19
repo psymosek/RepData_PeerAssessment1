@@ -163,5 +163,8 @@ xyplot(steps~interval|dtype,stepsinterval_new,type='l',layout=c(1,2),
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)
 
+* There is a greater average number of steps for the hours of 9:30 AM to 5:30 PM for
+weekends vs. weekdays
+
 
 
