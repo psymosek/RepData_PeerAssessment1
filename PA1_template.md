@@ -1,13 +1,9 @@
----
-title: "Reproducible Research: Peer Assessment 1"
-output: 
-  html_document:
-    keep_md: true
----
+# Reproducible Research: Peer Assessment 1
 
 
 ## Loading and preprocessing the data
-```{r,echo=TRUE}
+
+```r
 if( file.exists('activity.zip') ) {
     unzip('activity.zip')
     activity <- read.csv('activity.csv')
@@ -20,8 +16,8 @@ if( file.exists('activity.zip') ) {
 
 ## What is mean total number of steps taken per day?
 
-```{r,echo=TRUE}
 
+```r
 # calculate total of steps variable grouped by date
 
 stepsday <- aggregate(steps ~ date, activity, sum, na.action = na.pass)
@@ -30,17 +26,32 @@ stepsday <- aggregate(steps ~ date, activity, sum, na.action = na.pass)
 
 hist(stepsday$steps,breaks=15,xlab="Total steps", 
      main = "Histogram of Total Number of Steps")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-2-1.png)
+
+```r
 # calculate the mean and median of the total steps / day
 
 mean(stepsday$steps,na.rm=TRUE)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(stepsday$steps,na.rm=TRUE)
+```
+
+```
+## [1] 10765
 ```
 
 ## What is the average daily activity pattern?
 
-```{r,echo=TRUE}
 
+```r
 # calculate the average number of steps per interval
 
 stepsinterval <- aggregate(steps ~ interval, activity, mean, na.action = na.omit)
@@ -48,21 +59,35 @@ stepsinterval <- aggregate(steps ~ interval, activity, mean, na.action = na.omit
 # plot the average number of steps per interval
 
 plot(stepsinterval$interval,stepsinterval$steps,type="l",pch=20)
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-3-1.png)
+
+```r
 # calculate which 5 minute interval of the number of steps averaged across all days
 # is the greatest number of steps
 
 stepsinterval$interval[which.max(stepsinterval$steps)]
 ```
 
+```
+## [1] 835
+```
+
 ## Imputing missing values
 
-```{r,echo=TRUE}
 
+```r
 # calculate and report the total number of missing values in the dataset
 
 sum(is.na(activity$steps))
+```
 
+```
+## [1] 2304
+```
+
+```r
 # create a new data.frame with each NA value for the step variable replaced with the
 # average number of steps for the interval of that NA value
 
@@ -80,24 +105,45 @@ stepsday_new <- aggregate(steps ~ date, activity_new, sum)
 
 hist(stepsday_new$steps,breaks=15,xlab="Total steps", 
      main = "Histogram of Total Number of Steps")
+```
 
+![](PA1_template_files/figure-html/unnamed-chunk-4-1.png)
+
+```r
 # calculate the mean and median of the total steps / day
 
 mean(stepsday_new$steps)
+```
+
+```
+## [1] 10766.19
+```
+
+```r
 median(stepsday_new$steps)
+```
+
+```
+## [1] 10766.19
 ```
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
-```{r,echo = TRUE}
 
+```r
 # create a factor variable for weekend vs. weekday
 
 activity_new$dtype <- factor(weekdays(activity_new$date) %in% c("Saturday","Sunday"),
                              labels=c("Weekday","Weekend"))
 
 library(lattice)
+```
 
+```
+## Warning: package 'lattice' was built under R version 3.1.3
+```
+
+```r
 # calculate the average number of steps grouped by interval and dtype
 
 stepsinterval_new <- aggregate(steps ~ interval+dtype,activity_new,mean)
@@ -107,6 +153,8 @@ stepsinterval_new <- aggregate(steps ~ interval+dtype,activity_new,mean)
 xyplot(steps~interval|dtype,stepsinterval_new,type='l',layout=c(1,2),
        xlab="Interval",ylab="Number of Steps")
 ```
+
+![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)
 
 
 
