@@ -74,6 +74,8 @@ stepsinterval$interval[which.max(stepsinterval$steps)]
 ## [1] 835
 ```
 
+The 5 minute interval from 8:35 - 8:40 contains the maximum number of steps
+
 ## Imputing missing values
 
 
@@ -88,7 +90,7 @@ sum(is.na(activity$steps))
 ```
 
 ```r
-# create a new data.frame with each NA value for the step variable replaced with the
+# create a new data.frame with each NA value for the steps variable replaced with the
 # average number of steps for the interval of that NA value
 
 activity_new <- activity
@@ -126,6 +128,11 @@ median(stepsday_new$steps)
 ```
 ## [1] 10766.19
 ```
+
+* The mean number of steps per day does not change with NA's replaced by averages/interval
+* The median number of steps per day changes by 1.19 steps  
+* When NA's are replaced by average number of steps per interval, the effect is to increase
+the number of steps / day in the vicinity of the average (=10766.19)
 
 ## Are there differences in activity patterns between weekdays and weekends?
 
